@@ -1,0 +1,10 @@
+file:///C:/Users/DELL/OneDrive/Documents/Z_WSN_internship_work/HomelyHub/backend/src/routes/propertyRouter.js:2
+import { getProperties, getPropertyById} from "../controllers/propertyController.js";
+                        ^^^^^^^^^^^^^^^
+SyntaxError: The requested module '../controllers/propertyController.js' does not provide an export named 'getPropertyById'
+    at #asyncInstantiate (node:internal/modules/esm/module_job:327:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:431:5)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

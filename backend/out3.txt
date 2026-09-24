@@ -1,0 +1,6 @@
+◇ injected env (14) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+App is running on port no:8080
+MongoDb is Conneceted!
+^C
