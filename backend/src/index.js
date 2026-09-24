@@ -28,6 +28,13 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }))  //nested data w
 //3rd Middlewear : Cookiewear():
 app.use(cookieParser())
 
+//CookieParser:
+app.use(cookieParser())
+
+app.use(cors({
+    origin: process.env.ORIGIN_ACCESS_URL,
+    credentials: true,
+}));
 
 //test route:
 app.use('/api/v1/rent/listing', propertyRouter);
