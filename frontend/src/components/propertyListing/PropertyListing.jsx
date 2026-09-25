@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../../css/PropertyListing.css";
 import "../../css/PropertyListing.css";
 import PropertyImg from "./PropertyImg";

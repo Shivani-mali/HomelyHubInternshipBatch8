@@ -25,7 +25,7 @@ const propertySlice = createSlice({
         },
         getProperties(state, action) {
             state.properties = action.payload.data;
-            state.totalProperties = action.payload.all_properties;
+            state.totalProperties = action.payload.all_properties ?? action.payload.data.length;
             state.loading = false; //req finished => hide the loader:
 
         },

@@ -12,8 +12,13 @@ import { tripRouter } from "./routes/tripRouter.js";
 dotenv.config();
 const app = express(); //create the app
 
-const allowedOrigins = (process.env.ORIGIN_ACCESS_URL || "http://localhost:5173")
-    .split(",")
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "https://homelyhub.vercel.com",
+    ...(process.env.ORIGIN_ACCESS_URL || "").split(","),
+]
     .map((origin) => origin.trim().replace(/\/+$/, ""))
     .filter(Boolean);
 

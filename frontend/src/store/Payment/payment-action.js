@@ -15,6 +15,7 @@ export const initiateCheckoutSession = (paymentData) => async (dispatch) => {
     dispatch(
       paymentActions.getError(error.response?.data?.message || error.message)
     );
+    throw error;
   }
 };
 
@@ -33,5 +34,6 @@ export const verifyPayment = (verifyData) => async (dispatch) => {
     dispatch(
       paymentActions.getError(error.response?.data?.message || error.message)
     );
+    throw error;
   }
 };

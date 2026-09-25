@@ -57,10 +57,6 @@ fetchProperties(currentPage);
 
 
 useEffect(() => {
-  // TODO: fetch the properties for `currentPage` here and set them above.
-}, [currentPage]);
-
-useEffect(() => {
   if (propertyListRef.current) {
     gsap.fromTo(
       propertyListRef.current.children,

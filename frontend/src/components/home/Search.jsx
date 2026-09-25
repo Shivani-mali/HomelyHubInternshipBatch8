@@ -2,27 +2,29 @@ import React, { useState } from "react";
 import { DatePicker, Space } from "antd";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../css/Home.css";
+import { useDispatch } from "react-redux";
+import { propertyAction } from "../../store/Property/property-slice.js";
+import { getAllProperties } from "../../store/Property/property-action.js";
 
 const Search = () => {
   const { RangePicker } = DatePicker;
-  const [keyword, setKeyword] = useState({});
+  const dispatch = useDispatch();
+  const [keyword, setKeyword] = useState({
+    city: "",
+    guests: "",
+    dateIn: "",
+    dateOut: "",
+  });
   const [value, setValue] = useState([]);
 
   function searchHandler(e) {
     e.preventDefault();
-    // TODO: add your search logic here. `keyword` holds
-    // { city, guests, dateIn, dateOut }.
-    setKeyword({
-      city: "",
-      guests: "",
-      dateIn: "",
-      dateOut: "",
-    });
-    setValue([]);
+    dispatch(propertyAction.updateSearchParams({ ...keyword, page: 1 }));
+    dispatch(getAllProperties());
   }
 
   function returnDates(date, dateString) {
-    setValue([date[0], date[1]]);
+    setValue(date || []);
     updateKeyword("dateIn", dateString[0]);
     updateKeyword("dateOut", dateString[1]);
   }
@@ -48,7 +50,7 @@ const Search = () => {
         <Space direction="vertical" size={12}>
           <RangePicker
             value={value}
-            format="DD-MM-YYYY"
+            format="YYYY-MM-DD"
             picker="date"
             className="date_picker"
             disabledDate={(current) => {
@@ -62,7 +64,10 @@ const Search = () => {
           id="addguest"
           placeholder="Add guests"
           type="number"
-          onChange={(e) => updateKeyword("guests", +e.target.value)}
+          value={keyword.guests}
+          onChange={(e) =>
+            updateKeyword("guests", e.target.value ? +e.target.value : "")
+          }
         />
         <span
           className="material-symbols-outlined searchicon"

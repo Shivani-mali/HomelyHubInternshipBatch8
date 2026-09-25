@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import "../../css/AiTripPlanner.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/User/user-action";
+import { propertyAction } from "../../store/Property/property-slice.js";
+import { getAllProperties } from "../../store/Property/property-action.js";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -24,7 +26,8 @@ const Header = () => {
   };
 
   const refreshFunction = () => {
-    // TODO: add your "reset filters + reload properties" logic here.
+    dispatch(propertyAction.updateSearchParams({}));
+    dispatch(getAllProperties());
   };
 
   return (

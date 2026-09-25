@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FilterModal from "./FilterModal";
+import { useDispatch } from "react-redux";
+import { propertyAction } from "../../store/Property/property-slice.js";
+import { getAllProperties } from "../../store/Property/property-action.js";
 
 const Filter = () => {
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
 
@@ -13,16 +17,15 @@ const Filter = () => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    // TODO: add your "apply filters + fetch properties" logic here.
-    // `selectedFilters` holds the values chosen inside FilterModal.
-  }, [selectedFilters]);
-
-  const handleFilterChange = (filterName, value) => {
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterName]: value,
-    }));
+  const handleFilterChange = (filters) => {
+    setSelectedFilters(filters);
+    dispatch(
+      propertyAction.updateSearchParams({
+        ...filters,
+        page: 1,
+      })
+    );
+    dispatch(getAllProperties());
   };
 
   return (

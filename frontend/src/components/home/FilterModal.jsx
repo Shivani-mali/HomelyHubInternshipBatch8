@@ -48,14 +48,13 @@ const FilterModal = ({ selectedFilters, onFilterChange, onClose }) => {
   };
 
   const handleFilterChange = () => {
-    onFilterChange("minPrice", priceRange.min);
-    onFilterChange("maxPrice", priceRange.max);
-    onFilterChange("propertyType", propertyType);
-    onFilterChange("roomType", roomType);
-    onFilterChange(
-      "amenities",
-      amenities.map((a) => a)
-    );
+    onFilterChange({
+      minPrice: priceRange.min,
+      maxPrice: priceRange.max,
+      propertyType,
+      roomType,
+      amenities,
+    });
 
     onClose();
   };

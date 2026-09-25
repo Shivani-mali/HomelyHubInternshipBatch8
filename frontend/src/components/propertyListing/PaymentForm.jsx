@@ -33,7 +33,7 @@ const PaymentForm = ({
 
       return (
         currentMoment.isSameOrAfter(startDate) &&
-        currentMoment.isSameOrBefore(endDate)
+        currentMoment.isBefore(endDate)
       );
     });
   };

@@ -76,7 +76,7 @@ const Payment = () => {
     if (orderData && !showPaymentGateaway) {
       setShowPaymentGateaway(true);
     }
-  }, [orderData]);
+  }, [orderData, showPaymentGateaway]);
   if (showPaymentGateaway && orderData) {
     return (
       <div className="payment-gateway-overlay">

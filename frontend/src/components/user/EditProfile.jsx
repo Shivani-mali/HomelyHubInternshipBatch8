@@ -78,7 +78,7 @@ const EditProfile = () => {
         avatarUrl || "https://i.pravatar.cc/150?img=3"
       );
     }
-  }, [user]);
+  }, [user, avatarUrl, form]);
 
   return (
     <Fragment>

@@ -16,13 +16,16 @@ const getProperties = async(req,res)=>{
       .search()
       .paginate();
 
-      const allProperties = await Property.find();
-
       const doc = await features.query;
+      const countFeatures = new APIFeatures(Property.find(), req.query)
+      .filter()
+      .search();
+      const allProperties = await countFeatures.query.clone().countDocuments();
 
       res.status(200).json({
         status:"success",
         no_of_responses: doc.length,
+        all_properties: allProperties,
         data:doc
       })
     }catch(error){

@@ -49,7 +49,7 @@ export const currentUser = () => async (dispatch) => {
 
         // store current user details in redux
         dispatch(userActions.getCurrentUser(data.user));
-    } catch (error) {
+    } catch {
         // logout user if current user request fails
         dispatch(userActions.getLogout(null));
     }
@@ -63,7 +63,7 @@ export const updateUser = (updateUser) => async (dispatch) => {
         dispatch(userActions.getUpdateUserRequest());
 
         // call update user API
-        const response = await axiosInstance.patch(
+        await axiosInstance.patch(
             "/v1/rent/user/updateMe",
             updateUser
         );
