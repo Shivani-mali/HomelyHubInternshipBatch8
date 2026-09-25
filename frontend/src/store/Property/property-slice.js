@@ -12,7 +12,7 @@ const propertySlice = createSlice({
     name: "property",
     initialState: {
         properties: [],
-        totalProperties: 0,
+        totalProperties: null,
         searchParams: {},
         error: null,
         loading: false
@@ -25,7 +25,9 @@ const propertySlice = createSlice({
         },
         getProperties(state, action) {
             state.properties = action.payload.data;
-            state.totalProperties = action.payload.all_properties ?? action.payload.data.length;
+            state.totalProperties = Number.isFinite(action.payload.all_properties)
+                ? action.payload.all_properties
+                : null;
             state.loading = false; //req finished => hide the loader:
 
         },

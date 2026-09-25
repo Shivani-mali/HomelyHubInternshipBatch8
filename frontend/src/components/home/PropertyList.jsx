@@ -34,6 +34,8 @@ const Card = ({ id, image, name, address, price }) => {
   );
 };
 
+const PAGE_SIZE = 12;
+
 const PropertyList = () => {
   const [currentPage, setCurrentPage] = useState({ page: 1 });
 
@@ -41,7 +43,8 @@ const PropertyList = () => {
   const dispatch = useDispatch();
   const { properties, totalProperties } = useSelector((state) => state.properties);
 
-  const lastPage = Math.ceil(totalProperties / 12);
+  const lastPage =
+    totalProperties === null ? null : Math.ceil(totalProperties / PAGE_SIZE);
 
   const propertyListRef = useRef(null);
 
@@ -104,7 +107,11 @@ return (
       <button
         className="next_btn"
         onClick={() => setCurrentPage((prev) => ({ page: prev.page + 1 }))}
-        disabled={properties.length < 12 || currentPage.page === lastPage}
+        disabled={
+          lastPage === null
+            ? properties.length < PAGE_SIZE
+            : currentPage.page >= lastPage
+        }
       >
         <span className="material-symbols-outlined">arrow_forward_ios</span>
       </button>

@@ -28,7 +28,9 @@ const allowedOrigins = [
 app.use(cors({
     origin: (origin, callback) => {
         // Allow server-to-server requests without an Origin header.
-        if (!origin || allowedOrigins.includes(origin)) {
+        const isNetlifyPreview = /^https:\/\/[a-z0-9-]+\.netlify\.app$/i.test(origin || "");
+
+        if (!origin || allowedOrigins.includes(origin) || isNetlifyPreview) {
             callback(null, true);
             return;
         }
