@@ -12,8 +12,21 @@ import { tripRouter } from "./routes/tripRouter.js";
 dotenv.config();
 const app = express(); //create the app
 
+const allowedOrigins = (process.env.ORIGIN_ACCESS_URL || "http://localhost:5173")
+    .split(",")
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
+    .filter(Boolean);
+
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+        // Allow server-to-server requests without an Origin header.
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+        }
+
+        callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
 }));
 
@@ -27,14 +40,6 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }))  //nested data w
 
 //3rd Middlewear : Cookiewear():
 app.use(cookieParser())
-
-//CookieParser:
-app.use(cookieParser())
-
-app.use(cors({
-    origin: process.env.ORIGIN_ACCESS_URL,
-    credentials: true,
-}));
 
 //test route:
 app.use('/api/v1/rent/listing', propertyRouter);
