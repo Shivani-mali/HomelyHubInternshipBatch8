@@ -64,8 +64,30 @@ function App() {
 
             <Route path="ai-trip-planner" element={<AiTripPlanner />} />
 
-            <Route path="accomodation" element={<Accomodation />} />
-            <Route path="accomodationform" element={<AccomodationForm />} />
+            <Route
+              path="accomodation"
+              element={
+                loading ? (
+                  <LoadingSpinner />
+                ) : user ? (
+                  <Accomodation />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route
+              path="accomodationform"
+              element={
+                loading ? (
+                  <LoadingSpinner />
+                ) : user ? (
+                  <AccomodationForm />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
 
             <Route path="user/forgotPassword" element={<ForgetPassword />} />
             <Route

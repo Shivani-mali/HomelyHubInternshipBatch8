@@ -40,6 +40,13 @@ const getProperty = async(req,res)=>{
     try{
        const property = await Property.findById(req.params.id);
 
+       if (!property) {
+         return res.status(404).json({
+           status: "fail",
+           message: "Property not found",
+         });
+       }
+
        res.status(200).json({
         status:"success",
         data: property,

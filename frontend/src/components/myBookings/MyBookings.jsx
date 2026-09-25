@@ -3,25 +3,45 @@ import "../../css/MyBookings.css";
 import ProgressSteps from "../ProgressSteps";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
-import { STATIC_BOOKINGS } from "../../data/staticData";
+import { axiosInstance } from "../../utils/axios";
+import toast from "react-hot-toast";
 
 const MyBookings = () => {
   const navigate = useNavigate();
 
-  // STATIC: was `useSelector((state) => state.booking)`.
-  // TODO: replace with your own bookings fetching logic.
-  const [bookings] = useState(STATIC_BOOKINGS);
-  const [loading] = useState(false);
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: fetch the user bookings here and set them above.
+    const loadBookings = async () => {
+      try {
+        const { data } = await axiosInstance.get("/v1/rent/user/booking");
+        setBookings(data.data.bookings || []);
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Could not load bookings");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadBookings();
   }, []);
 
-  console.log(bookings);
-
   const handleBookingClick = (bookingId) => {
-    // TODO: fetch this booking's details here if you need to.
     navigate(`/user/myBookings/${bookingId}`);
+  };
+
+  const handleCancelBooking = async (event, bookingId) => {
+    event.stopPropagation();
+    if (!window.confirm("Cancel this booking?")) return;
+    try {
+      await axiosInstance.delete(`/v1/rent/user/booking/${bookingId}`);
+      setBookings((current) =>
+        current.filter((booking) => booking._id !== bookingId)
+      );
+      toast.success("Booking cancelled");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Could not cancel booking");
+    }
   };
 
   if (bookings.length === 0 && !loading) {
@@ -52,24 +72,22 @@ const MyBookings = () => {
                   <img
                     className="booking-img"
                     src={
-                      booking.property.images &&
-                      booking.property.images.length > 0
-                        ? booking.property.images[0].url
-                        : undefined
+                      booking.property?.images?.[0]?.url ||
+                      "/assets/template.jpeg"
                     }
-                    alt="bookings"
+                    alt={booking.property?.propertyName || "Booking"}
                   />
                 </div>
                 <div className="booking-information col-lg-9 col-md-9">
                   <h6 className="hotel-name">
-                    {booking.property.propertyName}
+                    {booking.property?.propertyName || "Accommodation"}
                   </h6>
                   <div className="stay-information">
                     <span className="info">
                       <span className="material-symbols-outlined icon">
                         bedtime
                       </span>
-                      {booking.numberOfnights} nights
+                      {booking.numberOfnights || booking.nights || 0} nights
                     </span>
                     <span className="info">
                       <span className="material-symbols-outlined icon">
@@ -77,7 +95,7 @@ const MyBookings = () => {
                       </span>
                       {new Date(booking.fromDate).toLocaleDateString()}
                     </span>
-                    <span class="material-symbols-outlined icon">
+                    <span className="material-symbols-outlined icon">
                       arrow_forward
                     </span>
                     <span className="info">
@@ -88,9 +106,16 @@ const MyBookings = () => {
                     </span>
                   </div>
                   <h5 className="booking-price">
-                    <span class="material-symbols-outlined">payments</span>{" "}
+                    <span className="material-symbols-outlined">payments</span>{" "}
                     Total Price :&#8377; {booking.price}
                   </h5>
+                  <button
+                    type="button"
+                    className="cancel-booking-button"
+                    onClick={(event) => handleCancelBooking(event, booking._id)}
+                  >
+                    Cancel booking
+                  </button>
                 </div>
               </div>
             </div>

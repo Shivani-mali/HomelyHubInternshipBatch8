@@ -46,11 +46,11 @@ export const STATIC_IS_AUTHENTICATED = true;
 /* AMENITIES                                                           */
 /* ------------------------------------------------------------------ */
 export const STATIC_AMENITIES = [
-  { id: "wifi", name: "Wifi", icon: "wifi" },
-  { id: "kitchen", name: "Kitchen", icon: "kitchen" },
+  { id: "wifi", name: "Wi-Fi", icon: "wifi" },
+  { id: "kitchen", name: "kitchen", icon: "kitchen" },
   { id: "tv", name: "TV", icon: "tv" },
-  { id: "parking", name: "Free parking", icon: "local_parking" },
-  { id: "ac", name: "Air conditioning", icon: "ac_unit" },
+  { id: "parking", name: "free Parking", icon: "local_parking" },
+  { id: "ac", name: "AC", icon: "ac_unit" },
   { id: "pool", name: "Pool", icon: "pool" },
 ];
 

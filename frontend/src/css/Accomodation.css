@@ -208,6 +208,14 @@ section > input::placeholder {
   transition: transform 0.5s;
 }
 
+.myaccomodation-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+  width: 60%;
+  max-width: 900px;
+}
+
 .myaccomodation-container:hover {
   box-shadow: 1px 1px 15px rgb(161, 160, 160);
   transform: scale(1.1);
@@ -239,6 +247,12 @@ section > input::placeholder {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+}
+
+.myaccomodation-hotel-name {
+  color: #17324d;
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
 }
 
 .stay-information {

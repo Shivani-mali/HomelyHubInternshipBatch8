@@ -29,15 +29,25 @@ const verifyPayment = async (req, res) => {
     const { orderId, bookingDetails, forceStatus } = req.body;
 
     if (forceStatus === "success") {
+        const fromDate = new Date(bookingDetails.fromDate);
+        const toDate = new Date(bookingDetails.toDate);
+        const calculatedNights = Math.max(
+            1,
+            Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24))
+        );
+
         //save the booking:
         const newbooking = await Booking.create({
             user: req.user._id,
             property: bookingDetails.propertyId,
             price: bookingDetails.price,
-            fromDate: bookingDetails.fromDate,
-            toDate: bookingDetails.toDate,
+            fromDate,
+            toDate,
             guests: bookingDetails.guests,
-            nights: bookingDetails.numberOfnights ?? bookingDetails.nights,
+            numberOfnights:
+                bookingDetails.numberOfnights ??
+                bookingDetails.nights ??
+                calculatedNights,
             paid: true
         });
 
@@ -96,7 +106,17 @@ const getUserBookings = async (req, res)=>{
 
 const getBookingDetails = async(req, res)=>{
     try{
-        const bookings = await Booking.findById(req.params.bookingId);
+        const bookings = await Booking.findOne({
+            _id: req.params.bookingId,
+            user: req.user._id,
+        });
+
+        if (!bookings) {
+            return res.status(404).json({
+                status: "fail",
+                message: "Booking not found",
+            });
+        }
 
         res.status(200).json({
             status:"success",
@@ -114,4 +134,35 @@ const getBookingDetails = async(req, res)=>{
     }
 }
 
-export {getBookingDetails, getUserBookings, createOrder, verifyPayment}
+const cancelBooking = async (req, res) => {
+    try {
+        const booking = await Booking.findOne({
+            _id: req.params.bookingId,
+            user: req.user._id,
+        });
+
+        if (!booking) {
+            return res.status(404).json({
+                status: "fail",
+                message: "Booking not found",
+            });
+        }
+
+        await Property.findByIdAndUpdate(booking.property._id || booking.property, {
+            $pull: { currentBookings: { bookingId: booking._id } },
+        });
+        await Booking.findByIdAndDelete(booking._id);
+
+        res.status(200).json({
+            status: "success",
+            message: "Booking cancelled successfully",
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            message: error.message,
+        });
+    }
+};
+
+export {getBookingDetails, getUserBookings, createOrder, verifyPayment, cancelBooking}

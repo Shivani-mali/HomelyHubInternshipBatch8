@@ -144,7 +144,7 @@ onSubmit: async ({ value }) => {
           <AddressField form={form} />
         </Section>
 
-        <Section icon="photo_library" title="Photos" hint="At least 6">
+        <Section icon="photo_library" title="Photos" hint="Up to 5">
           <form.Field name="images">
             {(field) => <ImagesUploading field={field} />}
           </form.Field>
@@ -166,7 +166,7 @@ onSubmit: async ({ value }) => {
                     </option>
                     <option value="House">House</option>
                     <option value="Flat">Flat</option>
-                    <option value="Guest House">Guest House</option>
+                    <option value="GuestHouse">Guest House</option>
                     <option value="Hotel">Hotel</option>
                   </select>
                 )}
@@ -185,9 +185,10 @@ onSubmit: async ({ value }) => {
                     <option value="" disabled>
                       Select
                     </option>
-                    <option value="Anytype">Anytype</option>
-                    <option value="Entire Home">Entire Home</option>
-                    <option value="Room">Room</option>
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Triple">Triple</option>
+                    <option value="Quad">Quad</option>
                   </select>
                 )}
               </form.Field>

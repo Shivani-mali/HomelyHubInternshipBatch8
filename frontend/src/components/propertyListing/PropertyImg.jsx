@@ -3,7 +3,11 @@ import Modal from "./Modal";
 
 const PropertyImg = ({ images }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log(images[0].url);
+  const availableImages = images?.filter((image) => image?.url) || [];
+  const galleryImages =
+    availableImages.length > 0
+      ? availableImages
+      : [{ url: "/assets/template.jpeg" }];
 
   const handleShowAllPhotos = () => {
     setIsModalOpen(true);
@@ -16,43 +20,44 @@ const PropertyImg = ({ images }) => {
   return (
     <>
       <div className="property-img-container">
-
-        <div className="img-item">
-          <img
-            src={images[0].url}
-            className="images"
-            style={{
-              borderTopLeftRadius: "10px",
-              borderBottomLeftRadius: "10px",
-            }}
-            alt="property-1"
-          />
-        </div>
-
-        {images.slice(1, 4).map((image, index) => (
-          <div key={index}>
+        {galleryImages.slice(0, 4).map((image, index) => (
+          <div className="img-item" key={`${image.url}-${index}`}>
             <img
-              className="images"
               src={image.url}
-              alt={`property-${index + 2}`}
+              className="images"
+              style={
+                index === 0
+                  ? {
+                      borderTopLeftRadius: "10px",
+                      borderBottomLeftRadius: "10px",
+                    }
+                  : undefined
+              }
+              alt={`property-${index + 1}`}
             />
           </div>
         ))}
-        <div>
-          <img
-            className="images"
-            src={images[5].url}
-            alt={`property-5`}
-            style={{ borderBottomRightRadius: "10px" }}
-          />
-          <button className="similar-photos" onClick={handleShowAllPhotos}>
-            <span className="material-symbols-outlined">photo_library</span>
-          </button>
-        </div>
+        {galleryImages.length > 4 && (
+          <div>
+            <img
+              className="images"
+              src={galleryImages[4].url}
+              alt="property-last"
+              style={{ borderBottomRightRadius: "10px" }}
+            />
+            {availableImages.length > 0 && (
+              <button className="similar-photos" onClick={handleShowAllPhotos}>
+                <span className="material-symbols-outlined">photo_library</span>
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="similar-photos-container"></div>
-      {isModalOpen && <Modal images={images} onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <Modal images={galleryImages} onClose={handleCloseModal} />
+      )}
     </>
   );
 };

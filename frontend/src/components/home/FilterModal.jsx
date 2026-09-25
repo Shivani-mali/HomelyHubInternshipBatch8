@@ -61,30 +61,31 @@ const FilterModal = ({ selectedFilters, onFilterChange, onClose }) => {
   };
 
   const propertyTypeOptions = [
-    { value: "house", label: "House", icon: "home" },
-    { value: "flat", label: "Flat", icon: "apartment" },
-    { value: "guest-house", label: "Guest House", icon: "hotel" },
-    { value: "hotel", label: "Hotel", icon: "meeting_room" },
+    { value: "House", label: "House", icon: "home" },
+    { value: "Flat", label: "Flat", icon: "apartment" },
+    { value: "GuestHouse", label: "Guest House", icon: "hotel" },
+    { value: "Hotel", label: "Hotel", icon: "meeting_room" },
   ];
 
   const roomTypeOptions = [
-    { value: "Entire Home", label: "Entire Home", icon: "hotel" },
-    { value: "Room", label: "Room", icon: "meeting_room" },
-    { value: "Anytype", label: "Any Type", icon: "apartment" },
+    { value: "Single", label: "Single", icon: "single_bed" },
+    { value: "Double", label: "Double", icon: "king_bed" },
+    { value: "Triple", label: "Triple", icon: "hotel" },
+    { value: "Quad", label: "Quad", icon: "meeting_room" },
   ];
 
   const amenitiesOptions = [
-    { value: "Wifi", label: "Wi-Fi", icon: "wifi" },
-    { value: "Kitchen", label: "Kitchen", icon: "kitchen" },
-    { value: "Ac", label: "AC", icon: "ac_unit" },
+    { value: "Wi-Fi", label: "Wi-Fi", icon: "wifi" },
+    { value: "kitchen", label: "Kitchen", icon: "kitchen" },
+    { value: "AC", label: "AC", icon: "ac_unit" },
     {
       value: "Washing Machine",
       label: "Washing Machine",
       icon: "local_laundry_service",
     },
-    { value: "Tv", label: "TV", icon: "tv" },
+    { value: "TV", label: "TV", icon: "tv" },
     { value: "Pool", label: "Pool", icon: "pool" },
-    { value: "Free Parking", label: "Free Parking", icon: "local_parking" },
+    { value: "free Parking", label: "Free Parking", icon: "local_parking" },
   ];
 
   const handleClearFilters = () => {

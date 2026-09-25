@@ -74,12 +74,12 @@ const propertySchema = new mongoose.Schema({
                 }
             }
         ],
-        //less than 6 images not taken this account:
+        // Keep the gallery within the five-image layout limit.
         validate: {
             validator: function (arr) {
-                return arr.length < 6;
+                return arr.length <= 5;
             },
-            message: "The maximum number of images allowed is 5.",
+            message: "A maximum of 5 images is allowed.",
         }
     },
 

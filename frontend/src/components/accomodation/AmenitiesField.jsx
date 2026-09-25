@@ -1,16 +1,16 @@
 import React from "react";
 
 const initialamenities = [
-  { id: "wifi", value: "Wifi", checked: false, icon: "wifi" },
+  { id: "wifi", value: "Wi-Fi", checked: false, icon: "wifi" },
   {
     id: "kitchen",
-    value: "Kitchen",
+    value: "kitchen",
     checked: false,
     icon: "kitchen",
   },
   {
     id: "parking",
-    value: "Free Parking",
+    value: "free Parking",
     checked: false,
     icon: "garage_home",
   },
@@ -20,18 +20,20 @@ const initialamenities = [
     icon: "local_laundry_service",
     checked: false,
   },
-  { id: "tv", value: "Tv", checked: false, icon: "tv" },
+  { id: "tv", value: "TV", checked: false, icon: "tv" },
   { id: "pool", value: "Pool", checked: false, icon: "pool" },
-  { id: "ac", value: "Ac", checked: false, icon: "air" },
+  { id: "ac", value: "AC", checked: false, icon: "air" },
 ];
 
-const AmenitiesField = ({ form }) => {
+const AmenitiesField = ({ form: _formApi }) => {
+  const Field = _formApi.Field;
+
   return (
     <div className="perks-container">
       <h4 className="perks-header">Amenities</h4>
       <p className="form-paras">Select perks</p>
 
-      <form.Field name="amenities">
+      <Field name="amenities">
         {(field) => (
           <div className="perks row">
             {initialamenities.map((amenity) => (
@@ -70,7 +72,7 @@ const AmenitiesField = ({ form }) => {
             ))}
           </div>
         )}
-      </form.Field>
+      </Field>
     </div>
   );
 };
